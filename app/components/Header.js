@@ -1,27 +1,31 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import TodoTextInput from './TodoTextInput';
+import style from '../containers/App.css';
+import classnames from 'classnames';
+import FieldEditor from './FieldEditor';
 
 export default class Header extends Component {
 
   static propTypes = {
-    addTodo: PropTypes.func.isRequired
+    addSite: PropTypes.func.isRequired
   };
 
-  handleSave = (text) => {
-    if (text.length !== 0) {
-      this.props.addTodo(text);
+  handleSave = (site) => {
+    if (site.length !== 0) {
+      this.props.addSite(site);
     }
   };
 
   render() {
     return (
       <header>
-        <h1>todos</h1>
-        <TodoTextInput
-          newTodo
+        <h1 className={classnames(style.title, style['is-3'])}>
+          Modify Headers
+        </h1>
+        <FieldEditor
+          newItem
           onSave={this.handleSave}
-          placeholder="What needs to be done?"
+          placeholder="google\.com"
         />
       </header>
     );

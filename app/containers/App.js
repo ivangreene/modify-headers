@@ -2,33 +2,31 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
 import MainSection from '../components/MainSection';
-import * as TodoActions from '../actions/todos';
-import style from './App.css';
+import RuleActions from '../actions/rules';
+import './App.css';
 
 @connect(
   state => ({
-    todos: state.todos
+    sites: state.sites
   }),
   dispatch => ({
-    actions: bindActionCreators(TodoActions, dispatch)
+    actions: bindActionCreators(RuleActions, dispatch)
   })
 )
-export default class App extends Component {
 
+export default class App extends Component {
   static propTypes = {
-    todos: PropTypes.array.isRequired,
+    sites: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
   };
 
   render() {
-    const { todos, actions } = this.props;
+    const { sites, actions } = this.props;
 
     return (
-      <div className={style.normal}>
-        <Header addTodo={actions.addTodo} />
-        <MainSection todos={todos} actions={actions} />
+      <div>
+        <MainSection sites={sites} actions={actions} />
       </div>
     );
   }

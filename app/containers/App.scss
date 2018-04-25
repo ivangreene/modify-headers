@@ -1,0 +1,13 @@
+@import "bulma/sass/utilities/initial-variables";
+@import "bulma/sass/utilities/functions";
+
+$family-monospace: Courier, monospace;
+$family-primary: $family-monospace;
+
+$section-padding: 1rem;
+
+.delete {
+  margin: 0.5rem;
+}
+
+@import "bulma/bulma.sass";

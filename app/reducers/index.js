@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import todos from './todos';
+import sites from './sites';
 
 export default combineReducers({
-  todos
+  sites,
 });
