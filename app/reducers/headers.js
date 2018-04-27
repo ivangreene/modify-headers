@@ -18,6 +18,19 @@ export default function headers (state = initialState, action) {
         siteId: action.siteId,
       }];
 
+    case EDIT_HEADER:
+      return [...state.map((header) => {
+        if (header.id === action.id) {
+          return Object.assign({}, header, {
+            header: action.header,
+          });
+        }
+        return header;
+      })];
+
+    case DELETE_HEADER:
+      return [...state.filter(header => header.id !== action.id)];
+
     case DELETE_SITE:
       return [...state.filter(header => header.siteId !== action.id)];
 

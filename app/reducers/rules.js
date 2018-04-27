@@ -9,5 +9,17 @@ import {
 const initialState = [];
 
 export default function rules (state = initialState, action) {
-  return state;
+  switch (action.type) {
+    case ADD_RULE:
+      return [...state, {
+        id: state.reduce((maxId, rule) => Math.max(rule.id, maxId), -1) + 1,
+        siteId: action.siteId,
+        headerId: action.headerId,
+        match: action.match,
+        replacement: action.replacement,
+      }];
+
+    default:
+      return state;
+  }
 }

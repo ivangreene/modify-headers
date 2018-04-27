@@ -8,19 +8,32 @@ const initialState = {
   rules: [],
 };
 
-describe('site rule reducer', () => {
+describe('rule reducer', () => {
   it('should return an initial state', () => {
     expect(reducer(undefined, {})).to.eql(initialState);
   });
 
-  it('should let us add a site', () => {
-    expect(reducer(initialState, {
-      type: ActionTypes.ADD_SITE,
-      pattern: 'foo\\.biz',
+  it('should let us add a rule', () => {
+    expect(reducer({
+      sites: [{ pattern: 'foo\\.biz', id: 0, }],
+      headers: [{ header: 'Content-Type', siteId: 0, id: 0 }],
+      rules: [],
+    }, {
+      type: ActionTypes.ADD_RULE,
+      siteId: 0,
+      headerId: 0,
+      match: 'application/json',
+      replacement: 'text/plain',
     })).to.eql({
       sites: [{ pattern: 'foo\\.biz', id: 0, }],
-      headers: [],
-      rules: [],
+      headers: [{ header: 'Content-Type', siteId: 0, id: 0 }],
+      rules: [{
+        match: 'application/json',
+        replacement: 'text/plain',
+        id: 0,
+        siteId: 0,
+        headerId: 0,
+      }],
     });
   });
 
