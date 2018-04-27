@@ -18,7 +18,7 @@ export default class Header extends Component {
 
   render() {
     return (
-      <header>
+      <header className={style.section}>
         <h1 className={classnames(style.title, style['is-3'])}>
           Modify Headers
         </h1>

@@ -20,7 +20,7 @@ export default class SiteItem extends Component {
     };
   }
 
-  handleDoubleClick = () => {
+  handleClick = () => {
     this.setState({ editing: true });
   };
 
@@ -59,7 +59,7 @@ export default class SiteItem extends Component {
           className={classnames(style.input, style['is-static'])}
           value={header.header}
           placeholder="Content-Type"
-          onDoubleClick={this.handleDoubleClick}
+          onClick={this.handleClick}
           readOnly />
       );
     }

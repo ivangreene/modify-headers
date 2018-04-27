@@ -20,7 +20,7 @@ export default class MainSection extends Component {
     const { sites, actions } = this.props;
 
     return (
-      <div className={style.container}>
+      <div>
         <section className={style.section}>
           <Header addSite={actions.addSite} />
           <ul>

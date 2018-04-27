@@ -1,3 +1,44 @@
+let sites = [];
+
+chrome.storage.sync.get('state', (obj) => {
+  const { state } = obj;
+  const initialState = JSON.parse(state || '{ "sites": [] }');
+  sites = initialState.sites.map(site => ({ ...site,
+    pattern: RegExp(site.pattern) }));
+});
+
+chrome.runtime.onMessage.addListener(function (data) {
+  if (data.type === "statechange") {
+    sites = data.state.sites.map(site => ({ ...site,
+      pattern: RegExp(site.pattern) }));
+  }
+});
+
+chrome.webRequest.onHeadersReceived.addListener(function (request) {
+  for (let i = 0; i < sites.length; i++) {
+    if (sites[i].pattern.test(request.url)) {
+      for (let j = 0; j < request.responseHeaders.length; j++) {
+        for (let k = 0; k < sites[i].headers.length; k++) {
+          if (request.responseHeaders[j].name === sites[i].headers[k].header) {
+            for (let m = 0; m < sites[i].headers[k].rules.length; m++) {
+              request.responseHeaders[j].value =
+                request.responseHeaders[j].value.replace(
+                  RegExp(sites[i].headers[k].rules[m].match),
+                  sites[i].headers[k].rules[m].replacement);
+            }
+          }
+        }
+      }
+    }
+  }
+  console.dir(sites);
+  console.dir(request.responseHeaders);
+  return { responseHeaders: request.responseHeaders };
+}, {
+  urls: ["<all_urls>"],
+  types: ["main_frame", "sub_frame"],
+}, ["blocking", "responseHeaders"]);
+
 function isInjected(tabId) {
   return chrome.tabs.executeScriptAsync(tabId, {
     code: `var injected = window.reactExampleInjected;

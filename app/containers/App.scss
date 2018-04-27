@@ -10,4 +10,9 @@ $section-padding: 1rem;
   margin: 0.5rem;
 }
 
+input.input.is-static {
+  padding-left: calc(0.625em - 1px);
+  padding-right: calc(0.625em - 1px);
+}
+
 @import "bulma/bulma.sass";

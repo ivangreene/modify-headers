@@ -45,7 +45,6 @@ export default class FieldEditor extends Component {
         type="text"
         className={style.input}
         placeholder={this.props.placeholder}
-        autoFocus="true"
         value={this.state.text}
         onBlur={this.handleBlur}
         onChange={this.handleChange}

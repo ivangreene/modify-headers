@@ -1,5 +1,9 @@
 function saveState(state) {
-  chrome.storage.local.set({ state: JSON.stringify(state) });
+  chrome.storage.sync.set({ state: JSON.stringify(state) });
+  chrome.extension.sendMessage({
+    type: "statechange",
+    state,
+  });
 }
 
 export default function () {

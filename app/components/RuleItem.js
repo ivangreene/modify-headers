@@ -16,18 +16,15 @@ export default class SiteItem extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      editing: false,
+      editing: '',
     };
   }
 
-  handleDoubleClick = () => {
-    this.setState({ editing: true });
+  handleClick = (field) => () => {
+    this.setState({ editing: field });
   };
 
-  handleSave = (field) => {
-    console.log('out');
-    return (text) => {
-      console.log('in');
+  handleSave = (field) => (text) => {
       const { rule, header, site, actions: { editRule } } = this.props;
       const newRule = {
         [field]: text,
@@ -35,50 +32,45 @@ export default class SiteItem extends Component {
       if (text.length !== 0) {
         editRule(site.id, header.id, rule.id, newRule);
       }
-      this.setState({ editing: false });
+      this.setState({ editing: '' });
     };
 
-    handleDelete = () => {
-      const { rule, site, header, actions: { deleteRule } } = this.props;
-      deleteRule(site.id, header.id, rule.id);
-    };
+  handleDelete = () => {
+    const { rule, site, header, actions: { deleteRule } } = this.props;
+    deleteRule(site.id, header.id, rule.id);
   };
 
   render() {
     const { rule } = this.props;
 
     let element;
-    if (this.state.editing) {
       element = (
         <div>
-          <FieldEditor
-            text={rule.match}
-            onSave={this.handleSave('match')}
-          />
-          <FieldEditor
-            text={rule.replacement}
-            onSave={this.handleSave('replacement')}
-          />
+          { this.state.editing === 'match' ?
+              <FieldEditor
+                text={rule.match}
+                onSave={this.handleSave('match')}
+              /> :
+              <input
+                className={classnames(style.input, style['is-static'])}
+                value={rule.match}
+                placeholder=".*"
+                onClick={this.handleClick('match')}
+                readOnly /> }
+          { this.state.editing === 'replacement' ?
+              <FieldEditor
+                text={rule.replacement}
+                onSave={this.handleSave('replacement')}
+              /> :
+              <input
+                className={classnames(style.input, style['is-static'])}
+                value={rule.replacement}
+                placeholder="text/plain"
+                onClick={this.handleClick('replacement')}
+                readOnly /> }
         </div>
       );
-    } else {
-      element = (
-        <div>
-          <input
-            className={classnames(style.input, style['is-static'])}
-            value={rule.match}
-            placeholder=".*"
-            onDoubleClick={this.handleDoubleClick}
-            readOnly />
-          <input
-            className={classnames(style.input, style['is-static'])}
-            value={rule.replacement}
-            placeholder="text/plain"
-            onDoubleClick={this.handleDoubleClick}
-            readOnly />
-        </div>
-      );
-    }
+    //}
 
     return (
       <li className={style.box}>
