@@ -1,68 +1,73 @@
 import { expect } from 'chai';
 import ActionTypes from '../../../app/constants/ActionTypes';
-import reducer from '../../../app/reducers';
+import rules from '../../../app/reducers/rules';
 
-const initialState = {
-  sites: [],
-  headers: [],
-  rules: [],
-};
+const initialState = [];
 
 describe('rule reducer', () => {
   it('should return an initial state', () => {
-    expect(reducer(undefined, {})).to.eql(initialState);
+    expect(rules(undefined, {})).to.eql(initialState);
   });
 
   it('should let us add a rule', () => {
-    expect(reducer({
-      sites: [{ pattern: 'foo\\.biz', id: 0, }],
-      headers: [{ header: 'Content-Type', siteId: 0, id: 0 }],
-      rules: [],
-    }, {
+    expect(rules(undefined, {
       type: ActionTypes.ADD_RULE,
       siteId: 0,
       headerId: 0,
       match: 'application/json',
       replacement: 'text/plain',
-    })).to.eql({
-      sites: [{ pattern: 'foo\\.biz', id: 0, }],
-      headers: [{ header: 'Content-Type', siteId: 0, id: 0 }],
-      rules: [{
-        match: 'application/json',
-        replacement: 'text/plain',
-        id: 0,
-        siteId: 0,
-        headerId: 0,
-      }],
-    });
-  });
-
-  it('should let us delete a site',
-      () => {
-        expect(reducer({
-          sites: [{ pattern: 'foo\\.biz', id: 0, }],
-          headers: [{ header: 'Content-Type', siteId: 0, id: 0 }],
-          rules: [],
-        }, {
-          type: ActionTypes.DELETE_SITE,
-          id: 0,
-        })).to.eql(initialState);
-  });
-
-  it('should let us edit a site', () => {
-    expect(reducer({
-      sites: [{ pattern: 'foo\\.biz', id: 0, }],
-      headers: [],
-      rules: [],
-    }, {
-      type: ActionTypes.EDIT_SITE,
+    })).to.eql([{
+      match: 'application/json',
+      replacement: 'text/plain',
       id: 0,
-      pattern: 'baz\\.quux',
-    })).to.eql({
-      sites: [{ pattern: 'baz\\.quux', id: 0, }],
-      headers: [],
-      rules: [],
-    });
+      siteId: 0,
+      headerId: 0,
+    }]);
+  });
+
+  it('should let us delete a rule', () => {
+    expect(rules([{
+      match: 'application/json',
+      replacement: 'text/plain',
+      id: 0,
+      siteId: 0,
+      headerId: 0,
+    }, {
+      match: 'application/json',
+      replacement: 'text/plain',
+      id: 1,
+      siteId: 0,
+      headerId: 0,
+    }], {
+      type: ActionTypes.DELETE_RULE,
+      id: 0,
+    })).to.eql([{
+      match: 'application/json',
+      replacement: 'text/plain',
+      id: 1,
+      siteId: 0,
+      headerId: 0,
+    }]);
+  });
+
+  it('should let us edit a rule', () => {
+    expect(rules([{
+      match: 'application/json',
+      replacement: 'text/plain',
+      id: 1,
+      siteId: 0,
+      headerId: 0,
+    }], {
+      type: ActionTypes.EDIT_RULE,
+      id: 1,
+      match: 'application/xml',
+    })).to.eql([{
+      match: 'application/xml',
+      replacement: 'text/plain',
+      id: 1,
+      siteId: 0,
+      headerId: 0,
+    }]);
   });
 });
 

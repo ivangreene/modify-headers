@@ -1,74 +1,45 @@
 import { expect } from 'chai';
 import ActionTypes from '../../../app/constants/ActionTypes';
-import reducer from '../../../app/reducers';
+import headers from '../../../app/reducers/headers';
 
-const initialState = {
-  sites: [],
-  headers: [],
-  rules: [],
-};
+const initialState = [];
 
 describe('header rule reducer', () => {
   it('should return an initial state', () => {
-    expect(reducer(undefined, {})).to.eql(initialState);
+    expect(headers(undefined, {})).to.eql(initialState);
   });
 
   it('should let us add a header', () => {
-    expect(reducer({
-      sites: [{ pattern: 'foo\\.biz', id: 0, }],
-      headers: [],
-      rules: [],
-    }, {
+    expect(headers([], {
       type: ActionTypes.ADD_HEADER,
       header: 'Content-Type',
       siteId: 0,
-    })).to.eql({
-      sites: [{ pattern: 'foo\\.biz', id: 0, }],
-      headers: [{ header: 'Content-Type', id: 0, siteId: 0, }],
-      rules: [],
-    });
+    })).to.eql([{ header: 'Content-Type', id: 0, siteId: 0, }]);
   });
 
   it('should let us delete a header', () => {
-    expect(reducer({
-      sites: [{ pattern: 'foo\\.biz', id: 0, }],
-      headers: [{ header: 'Content-Type', id: 0, siteId: 0, }],
-      rules: [],
-    }, {
+    expect(headers([{ header: 'Content-Type', id: 0, siteId: 0, }], {
       type: ActionTypes.DELETE_HEADER,
       id: 0,
-    })).to.eql({
-      sites: [{ pattern: 'foo\\.biz', id: 0, }],
-      headers: [],
-      rules: [],
-    });
+    })).to.eql(initialState);
   });
 
   it('should let us delete a site, and delete headers belonging to that site',
       () => {
-        expect(reducer({
-          sites: [{ pattern: 'foo\\.biz', id: 0, }],
-          headers: [{ header: 'Content-Type', siteId: 0, id: 0 }],
-          rules: [],
-        }, {
+        expect(headers([
+          { header: 'Content-Type', siteId: 0, id: 0 },
+          { header: 'Content-Disposition', siteId: 1, id: 1 },
+        ], {
           type: ActionTypes.DELETE_SITE,
           id: 0,
-        })).to.eql(initialState);
+        })).to.eql([{ header: 'Content-Disposition', siteId: 1, id: 1 }]);
   });
 
   it('should let us edit a header', () => {
-    expect(reducer({
-      sites: [{ pattern: 'foo\\.biz', id: 0, }],
-      headers: [{ header: 'Content-Type', id: 0, siteId: 0, }],
-      rules: [],
-    }, {
+    expect(headers([{ header: 'Content-Type', id: 0, siteId: 0, }], {
       type: ActionTypes.EDIT_HEADER,
       id: 0,
       header: 'Content-Disposition',
-    })).to.eql({
-      sites: [{ pattern: 'foo\\.biz', id: 0, }],
-      headers: [{ header: 'Content-Disposition', id: 0, siteId: 0, }],
-      rules: [],
-    });
+    })).to.eql([{ header: 'Content-Disposition', id: 0, siteId: 0, }]);
   });
 });

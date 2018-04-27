@@ -19,6 +19,24 @@ export default function rules (state = initialState, action) {
         replacement: action.replacement,
       }];
 
+    case DELETE_RULE:
+      return [...state.filter(rule => rule.id !== action.id)];
+
+    case EDIT_RULE:
+      return [...state.map(rule => {
+        if (rule.id === action.id) {
+          let newRule = Object.assign({}, rule);
+          if (action.match !== undefined) {
+            newRule.match = action.match;
+          }
+          if (action.replacement !== undefined) {
+            newRule.replacement = action.replacement;
+          }
+          return newRule;
+        }
+        return rule;
+      })];
+
     default:
       return state;
   }
