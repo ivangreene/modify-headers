@@ -1,39 +1,50 @@
 import types from '../constants/ActionTypes';
 
 export default {
-  addRule(siteId, headerId, rule) {
-    return { type: types.ADD_RULE, siteId, headerId, rule };
-  },
-
-  deleteRule(siteId, headerId, id) {
-    return { type: types.DELETE_RULE, siteId, headerId, id };
-  },
-
-  editRule(siteId, headerId, id, rule) {
-    return { type: types.EDIT_RULE, siteId, headerId, id, rule };
-  },
-
-  addHeader(siteId, header) {
-    return { type: types.ADD_HEADER, siteId, header };
-  },
-
-  deleteHeader(siteId, id) {
-    return { type: types.DELETE_HEADER, siteId, id };
-  },
-
-  editHeader(siteId, id, header) {
-    return { type: types.EDIT_HEADER, siteId, id, header };
-  },
-
-  addSite(site) {
-    return { type: types.ADD_SITE, site };
+  addSite(pattern) {
+    return { type: types.ADD_SITE, pattern };
   },
 
   deleteSite(id) {
     return { type: types.DELETE_SITE, id };
   },
 
-  editSite(id, site) {
-    return { type: types.EDIT_SITE, id, site };
+  editSite(id, pattern) {
+    return { type: types.EDIT_SITE, id, pattern };
+  },
+
+  addHeader(siteId, header) {
+    return { type: types.ADD_HEADER, siteId, header };
+  },
+
+  deleteHeader(id) {
+    return { type: types.DELETE_HEADER, id };
+  },
+
+  editHeader(id, header) {
+    return { type: types.EDIT_HEADER, id, header };
+  },
+
+  addRule(siteId, headerId, rule) {
+    return {
+      type: types.ADD_RULE,
+      siteId,
+      headerId,
+      match: rule.match,
+      replacement: rule.replacement,
+    };
+  },
+
+  deleteRule(id) {
+    return { type: types.DELETE_RULE, id };
+  },
+
+  editRule(id, rule) {
+    return {
+      type: types.EDIT_RULE,
+      id,
+      match: rule.match,
+      replacement: rule.replacement,
+    };
   },
 }
