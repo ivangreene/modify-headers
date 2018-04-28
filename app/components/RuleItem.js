@@ -7,8 +7,6 @@ import classnames from 'classnames';
 export default class SiteItem extends Component {
 
   static propTypes = {
-    header: PropTypes.object.isRequired,
-    site: PropTypes.object.isRequired,
     rule: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
@@ -25,19 +23,19 @@ export default class SiteItem extends Component {
   };
 
   handleSave = (field) => (text) => {
-      const { rule, header, site, actions: { editRule } } = this.props;
+      const { rule, actions: { editRule } } = this.props;
       const newRule = {
         [field]: text,
       };
       if (text.length !== 0) {
-        editRule(site.id, header.id, rule.id, newRule);
+        editRule(rule.id, newRule);
       }
       this.setState({ editing: '' });
     };
 
   handleDelete = () => {
-    const { rule, site, header, actions: { deleteRule } } = this.props;
-    deleteRule(site.id, header.id, rule.id);
+    const { rule, actions: { deleteRule } } = this.props;
+    deleteRule(rule.id);
   };
 
   render() {

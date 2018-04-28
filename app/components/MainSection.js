@@ -8,7 +8,9 @@ export default class MainSection extends Component {
 
   static propTypes = {
     sites: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
+    headers: PropTypes.array.isRequired,
+    rules: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired,
   };
 
   constructor(props, context) {
@@ -17,7 +19,7 @@ export default class MainSection extends Component {
   }
 
   render() {
-    const { sites, actions } = this.props;
+    const { sites, headers, rules, actions } = this.props;
 
     return (
       <div>
@@ -25,7 +27,9 @@ export default class MainSection extends Component {
           <Header addSite={actions.addSite} />
           <ul>
             {sites.map(site =>
-              <SiteItem key={site.id} site={site} actions={actions} />
+              <SiteItem key={site.id} rules={rules}
+                headers={headers.filter(header => header.siteId === site.id)}
+                site={site} actions={actions} />
             )}
           </ul>
         </section>

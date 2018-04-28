@@ -9,6 +9,8 @@ export default class SiteItem extends Component {
 
   static propTypes = {
     site: PropTypes.object.isRequired,
+    headers: PropTypes.array.isRequired,
+    rules: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
@@ -42,7 +44,7 @@ export default class SiteItem extends Component {
   };
 
   render() {
-    const { site, actions } = this.props;
+    const { site, headers, rules, actions } = this.props;
 
     let element;
     if (this.state.editing) {
@@ -75,9 +77,9 @@ export default class SiteItem extends Component {
           </a>
         </div>
         <ul>
-          {site.headers.map(header => (
-            <HeaderItem key={header.id} header={header} site={site}
-                actions={actions} />
+          {headers.map(header => (
+            <HeaderItem key={header.id} header={header} actions={actions}
+              rules={rules.filter(rule => rule.headerId === header.id)} />
           ))}
         </ul>
       </li>

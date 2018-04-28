@@ -5,11 +5,11 @@ import RuleItem from './RuleItem';
 import style from '../containers/App.css';
 import classnames from 'classnames';
 
-export default class SiteItem extends Component {
+export default class HeaderItem extends Component {
 
   static propTypes = {
     header: PropTypes.object.isRequired,
-    site: PropTypes.object.isRequired,
+    rules: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
@@ -25,25 +25,25 @@ export default class SiteItem extends Component {
   };
 
   newRule = () => {
-    const { site, header, actions: { addRule } } = this.props;
-    addRule(site.id, header.id, { match: '', replacement: '' });
+    const { header, actions: { addRule } } = this.props;
+    addRule(header.siteId, header.id, { match: '', replacement: '' });
   };
 
   handleSave = (headerName) => {
-    const { header, site, actions: { editHeader } } = this.props;
+    const { header, actions: { editHeader } } = this.props;
     if (headerName.length !== 0) {
-      editHeader(site.id, header.id, headerName);
+      editHeader(header.id, headerName);
     }
     this.setState({ editing: false });
   };
 
   handleDelete = () => {
-    const { site, header, actions: { deleteHeader } } = this.props;
-    deleteHeader(site.id, header.id);
+    const { header, actions: { deleteHeader } } = this.props;
+    deleteHeader(header.id);
   };
 
   render() {
-    const { header, site, actions } = this.props;
+    const { header, rules, actions } = this.props;
 
     let element;
     if (this.state.editing) {
@@ -77,9 +77,8 @@ export default class SiteItem extends Component {
           </a>
         </div>
         <ul>
-          {header.rules.map(rule => (
-            <RuleItem key={rule.id} rule={rule} header={header} site={site}
-                actions={actions} />
+          {rules.map(rule => (
+            <RuleItem key={rule.id} rule={rule} actions={actions} />
           ))}
         </ul>
       </li>

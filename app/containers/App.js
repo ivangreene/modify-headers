@@ -8,7 +8,9 @@ import './App.css';
 
 @connect(
   state => ({
-    sites: state.sites
+    sites: state.sites,
+    headers: state.headers,
+    rules: state.rules,
   }),
   dispatch => ({
     actions: bindActionCreators(RuleActions, dispatch)
@@ -18,15 +20,18 @@ import './App.css';
 export default class App extends Component {
   static propTypes = {
     sites: PropTypes.array.isRequired,
+    headers: PropTypes.array.isRequired,
+    rules: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
   };
 
   render() {
-    const { sites, actions } = this.props;
+    const { sites, headers, rules, actions } = this.props;
 
     return (
       <div>
-        <MainSection sites={sites} actions={actions} />
+        <MainSection rules={rules} headers={headers} sites={sites}
+          actions={actions} />
       </div>
     );
   }
