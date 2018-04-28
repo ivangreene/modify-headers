@@ -25,17 +25,21 @@ export default function rules (state = initialState, action) {
     case EDIT_RULE:
       return [...state.map(rule => {
         if (rule.id === action.id) {
-          let newRule = Object.assign({}, rule);
-          if (action.match !== undefined) {
-            newRule.match = action.match;
-          }
-          if (action.replacement !== undefined) {
-            newRule.replacement = action.replacement;
-          }
-          return newRule;
+          return Object.assign({}, rule, {
+            match: action.match === undefined ?
+                rule.match : action.match,
+            replacement: action.replacement === undefined ?
+                rule.replacement : action.replacement,
+          });
         }
         return rule;
       })];
+
+    case DELETE_SITE:
+      return [...state.filter(rule => rule.siteId !== action.id)];
+
+    case DELETE_HEADER:
+      return [...state.filter(rule => rule.headerId !== action.id)];
 
     default:
       return state;
