@@ -7,9 +7,9 @@ const customPath = path.join(__dirname, './customPublicPath');
 module.exports = {
   mode: 'production',
   entry: {
-    todoapp: [customPath, path.join(__dirname, '../chrome/extension/todoapp')],
+    modifyheaders: [customPath, path.join(__dirname, '../chrome/extension/modifyheaders')],
     background: [customPath, path.join(__dirname, '../chrome/extension/background')],
-    inject: [customPath, path.join(__dirname, '../chrome/extension/inject')]
+    // inject: [customPath, path.join(__dirname, '../chrome/extension/inject')]
   },
   output: {
     path: path.join(__dirname, '../build/js'),

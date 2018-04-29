@@ -11,7 +11,7 @@ const baseDevConfig = () => ({
   mode: 'development',
   devtool: 'eval-cheap-module-source-map',
   entry: {
-    todoapp: [customPath, hotScript, path.join(__dirname, '../chrome/extension/todoapp')],
+    modifyheaders: [customPath, hotScript, path.join(__dirname, '../chrome/extension/modifyheaders')],
     background: [customPath, hotScript, path.join(__dirname, '../chrome/extension/background')],
   },
   devMiddleware: {
@@ -68,7 +68,7 @@ const baseDevConfig = () => ({
     }]
   }
 });
-
+/*
 const injectPageConfig = baseDevConfig();
 injectPageConfig.entry = [
   customPath,
@@ -81,9 +81,10 @@ injectPageConfig.output = {
   path: path.join(__dirname, '../dev/js'),
   filename: 'inject.bundle.js',
 };
+*/
 const appConfig = baseDevConfig();
 
 module.exports = [
-  injectPageConfig,
+//  injectPageConfig,
   appConfig
 ];
