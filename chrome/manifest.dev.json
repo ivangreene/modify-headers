@@ -2,7 +2,7 @@
   "version": "0.1.0",
   "name": "modify-headers",
   "manifest_version": 2,
-  "description": "Modify Incoming/Outgoing HTTP Headers",
+  "description": "Modify Outgoing HTTP Headers",
   "browser_action": {
     "default_title": "Modify Headers",
     "default_popup": "popup.html"
