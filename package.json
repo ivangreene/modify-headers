@@ -62,7 +62,6 @@
     "postcss-loader": "^2.1.4",
     "pug-cli": "^1.0.0-alpha6",
     "react-addons-test-utils": "^15.6.2",
-    "react-dock": "^0.2.4",
     "rimraf": "^2.6.2",
     "selenium-webdriver": "^4.0.0-alpha.1",
     "shelljs": "^0.8.1",
